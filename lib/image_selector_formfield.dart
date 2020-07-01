@@ -1,12 +1,13 @@
 library image_selector_formfield;
 
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:image_cropper/image_cropper.dart';
-
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+
 export 'package:image_cropper/src/options.dart';
 
 class ImageSelectorFormField extends StatefulWidget {
@@ -54,6 +55,7 @@ class ImageSelectorFormField extends StatefulWidget {
   final void Function(File) onSaved;
   final void Function(File) onChanged;
   final String Function(File) validator;
+
   @override
   _ImageSelectorFormFieldState createState() => _ImageSelectorFormFieldState();
 }
@@ -247,8 +249,8 @@ class __InkWidgetState extends State<_InkWidget> {
     }
   }
 
-  Future<File> getImage() async {
-    File image = await ImagePicker.pickImage(source: ImageSource.gallery);
+  Future<File> getImage(ImageSource source) async {
+    File image = await ImagePicker.pickImage(source: source);
     if (image != null) {
       File croppedFile = await ImageCropper.cropImage(
         aspectRatio: widget.cropStyle == CropStyle.circle
@@ -296,12 +298,62 @@ class __InkWidgetState extends State<_InkWidget> {
                   : Container()
           : Image.file(_imageFile),
       onTap: () async {
-        await getImage().then((imagen) {
-          _imageFile = imagen;
-          widget.setImage(imagen);
-        });
-        setState(() {});
+        showDialog(
+            context: null,
+            builder: (BuildContext context) {
+              return _buildImagePickerAlertDialog(context);
+            });
       },
+    );
+  }
+
+  AlertDialog _buildImagePickerAlertDialog(
+    BuildContext context,
+  ) {
+    return AlertDialog(
+      title: Text("Выберите источник:"),
+      content: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          CupertinoButton(
+            child: Text(
+              "Галерея",
+              style: Theme.of(context).textTheme.display2,
+            ),
+            onPressed: () async {
+              await getImage(ImageSource.gallery).then((imagen) {
+                _imageFile = imagen;
+                widget.setImage(imagen);
+              });
+              setState(() {});
+            },
+          ),
+          CupertinoButton(
+            child: Text(
+              "Камера",
+              style: Theme.of(context).textTheme.display2,
+            ),
+            onPressed: () async {
+              await getImage(ImageSource.camera).then((imagen) {
+                _imageFile = imagen;
+                widget.setImage(imagen);
+              });
+              setState(() {});
+            },
+          ),
+          CupertinoButton(
+            child: Text(
+              "Отмена",
+              style: Theme.of(context).textTheme.display2,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      ),
     );
   }
 }
