@@ -299,7 +299,7 @@ class __InkWidgetState extends State<_InkWidget> {
           : Image.file(_imageFile),
       onTap: () async {
         showDialog(
-            context: null,
+            context: context,
             builder: (BuildContext context) {
               return _buildImagePickerAlertDialog(context);
             });
