@@ -13,26 +13,26 @@ export 'package:image_cropper/src/options.dart';
 class ImageSelectorFormField extends StatefulWidget {
   ImageSelectorFormField(
       {Key key,
-      this.initialImage,
-      this.imageURL = "",
-      this.cropRatioX,
-      this.cropRatioY,
-      this.boxConstraints = const BoxConstraints(maxHeight: 300, maxWidth: 300),
-      this.borderRadius,
-      this.cropMaxWidth = 720,
-      this.cropMaxHeight = 1280,
-      this.cropStyle = CropStyle.rectangle,
-      this.compressQuality = 90,
-      this.compressFormat = ImageCompressFormat.jpg,
-      this.aspectRatioPresets = CropAspectRatioPreset.values,
-      this.androidUiSettings,
-      this.iosUiSettings,
-      this.onSaved,
-      this.onChanged,
-      this.validator,
-      this.errorTextStyle,
-      this.icon,
-      this.backgroundColor = Colors.black12})
+        this.initialImage,
+        this.imageURL = "",
+        this.cropRatioX,
+        this.cropRatioY,
+        this.boxConstraints = const BoxConstraints(maxHeight: 300, maxWidth: 300),
+        this.borderRadius,
+        this.cropMaxWidth = 720,
+        this.cropMaxHeight = 1280,
+        this.cropStyle = CropStyle.rectangle,
+        this.compressQuality = 90,
+        this.compressFormat = ImageCompressFormat.jpg,
+        this.aspectRatioPresets = CropAspectRatioPreset.values,
+        this.androidUiSettings,
+        this.iosUiSettings,
+        this.onSaved,
+        this.onChanged,
+        this.validator,
+        this.errorTextStyle,
+        this.icon,
+        this.backgroundColor = Colors.black12})
       : super(key: key);
 
   final File initialImage;
@@ -134,7 +134,7 @@ class _ImageSelectorFormFieldState extends State<ImageSelectorFormField> {
                               Icon(
                                 Icons.add_a_photo,
                                 size: widget.boxConstraints.biggest.width >
-                                        widget.boxConstraints.biggest.height
+                                    widget.boxConstraints.biggest.height
                                     ? widget.boxConstraints.biggest.height / 2.5
                                     : widget.boxConstraints.biggest.width / 2.5,
                                 color: Colors.black45,
@@ -144,9 +144,9 @@ class _ImageSelectorFormFieldState extends State<ImageSelectorFormField> {
                 )),
             state.hasError
                 ? Container(
-                    padding: EdgeInsets.only(top: 5),
-                    child: Text(state.errorText,
-                        style: this.widget.errorTextStyle))
+                padding: EdgeInsets.only(top: 5),
+                child: Text(state.errorText,
+                    style: this.widget.errorTextStyle))
                 : Container()
           ],
         );
@@ -187,9 +187,9 @@ class _ImageSelectorFormFieldState extends State<ImageSelectorFormField> {
             ),
             state.hasError
                 ? Container(
-                    padding: EdgeInsets.only(top: 5),
-                    child: Text(state.errorText,
-                        style: this.widget.errorTextStyle))
+                padding: EdgeInsets.only(top: 5),
+                child: Text(state.errorText,
+                    style: this.widget.errorTextStyle))
                 : Container()
           ],
         );
@@ -201,21 +201,21 @@ class _ImageSelectorFormFieldState extends State<ImageSelectorFormField> {
 class _InkWidget extends StatefulWidget {
   _InkWidget(
       {Key key,
-      this.imageFile,
-      this.imageURL,
-      this.cropStyle = CropStyle.rectangle,
-      this.cropRatioX,
-      this.cropRatioY,
-      this.borderRadius,
-      this.cropMaxWidth,
-      this.cropMaxHeight,
-      this.compressQuality,
-      this.aspectRatioPresets,
-      this.compressFormat,
-      this.androidUiSettings,
-      this.iosUiSettings,
-      this.icon,
-      this.setImage})
+        this.imageFile,
+        this.imageURL,
+        this.cropStyle = CropStyle.rectangle,
+        this.cropRatioX,
+        this.cropRatioY,
+        this.borderRadius,
+        this.cropMaxWidth,
+        this.cropMaxHeight,
+        this.compressQuality,
+        this.aspectRatioPresets,
+        this.compressFormat,
+        this.androidUiSettings,
+        this.iosUiSettings,
+        this.icon,
+        this.setImage})
       : super(key: key);
 
   final File imageFile;
@@ -256,9 +256,9 @@ class __InkWidgetState extends State<_InkWidget> {
         aspectRatio: widget.cropStyle == CropStyle.circle
             ? CropAspectRatio(ratioX: 1.0, ratioY: 1.0)
             : widget.cropRatioX != null && widget.cropRatioY != null
-                ? CropAspectRatio(
-                    ratioX: widget.cropRatioX, ratioY: widget.cropRatioY)
-                : null,
+            ? CropAspectRatio(
+            ratioX: widget.cropRatioX, ratioY: widget.cropRatioY)
+            : null,
         sourcePath: image.path,
         maxWidth: widget.cropMaxWidth,
         maxHeight: widget.cropMaxHeight,
@@ -279,23 +279,23 @@ class __InkWidgetState extends State<_InkWidget> {
     return InkWell(
       child: _imageFile == null
           ? (widget.imageURL == null || widget.imageURL == "")
-              ? widget.cropStyle == CropStyle.circle
-                  ? // Icon to show when there isn't image - cropstyle circle
-                  Container(
-                      // size is necessary for Gesture area
-                      width: this.widget.borderRadius,
-                      height: this.widget.borderRadius,
-                      child: this.widget.icon,
-                    )
-                  : // Icon to show when there isn't image - cropstyle rectangle
-                  this.widget.icon
-              : (widget.imageURL != "" && widget.imageURL != null)
-                  ? CachedNetworkImage(
-                      alignment: Alignment.center,
-                      imageUrl: widget.imageURL,
-                      fit: BoxFit.cover,
-                    )
-                  : Container()
+          ? widget.cropStyle == CropStyle.circle
+          ? // Icon to show when there isn't image - cropstyle circle
+      Container(
+        // size is necessary for Gesture area
+        width: this.widget.borderRadius,
+        height: this.widget.borderRadius,
+        child: this.widget.icon,
+      )
+          : // Icon to show when there isn't image - cropstyle rectangle
+      this.widget.icon
+          : (widget.imageURL != "" && widget.imageURL != null)
+          ? CachedNetworkImage(
+        alignment: Alignment.center,
+        imageUrl: widget.imageURL,
+        fit: BoxFit.cover,
+      )
+          : Container()
           : Image.file(_imageFile),
       onTap: () async {
         showDialog(
@@ -308,10 +308,12 @@ class __InkWidgetState extends State<_InkWidget> {
   }
 
   AlertDialog _buildImagePickerAlertDialog(
-    BuildContext context,
-  ) {
+      BuildContext context,
+      ) {
     return AlertDialog(
-      title: Text("Выберите источник:"),
+      title: Text("Выберите источник:",
+        style: TextStyle(color: Colors.black, fontSize: 18),
+      ),
       content: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -320,33 +322,35 @@ class __InkWidgetState extends State<_InkWidget> {
           CupertinoButton(
             child: Text(
               "Галерея",
-              style: Theme.of(context).textTheme.display2,
+              style: TextStyle(color: Colors.black, fontSize: 14),
             ),
             onPressed: () async {
               await getImage(ImageSource.gallery).then((imagen) {
                 _imageFile = imagen;
                 widget.setImage(imagen);
               });
+              Navigator.of(context).pop();
               setState(() {});
             },
           ),
           CupertinoButton(
             child: Text(
               "Камера",
-              style: Theme.of(context).textTheme.display2,
+              style: TextStyle(color: Colors.black, fontSize: 14),
             ),
             onPressed: () async {
               await getImage(ImageSource.camera).then((imagen) {
                 _imageFile = imagen;
                 widget.setImage(imagen);
               });
+              Navigator.of(context).pop();
               setState(() {});
             },
           ),
           CupertinoButton(
             child: Text(
               "Отмена",
-              style: Theme.of(context).textTheme.display2,
+              style: TextStyle(color: Colors.black, fontSize: 14),
             ),
             onPressed: () {
               Navigator.of(context).pop();
